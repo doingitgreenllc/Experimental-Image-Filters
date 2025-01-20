@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Sight Undercover - Experimental Image Filters</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sight Undercover - Experimental Image Filters from sight-undercover.com</a>
+            <a class="nav-link" href="/faq">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-12">
+                <div id="dropZone" class="upload-area">
+                    <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                    <h4>Drag & Drop or Click to Upload Image</h4>
+                    <p class="text-muted">Supported formats: PNG, JPG, JPEG, GIF</p>
+                    <input type="file" id="fileInput" class="d-none" accept="image/*" multiple>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary d-none" id="loadingSpinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div id="imageContainer" class="position-relative">
+                    <img id="mainImage" class="img-fluid zoom-image" src="{{ url_for('static', filename='img/placeholder.svg') }}" alt="Main image display">
+                    <div class="zoom-controls bg-light rounded-pill shadow-sm p-2 position-absolute top-0 end-0 m-2">
+                        <button class="btn btn-sm btn-light rounded-circle" onclick="zoomIn()" title="Zoom In">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                        <button class="btn btn-sm btn-light rounded-circle" onclick="zoomOut()" title="Zoom Out">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <button class="btn btn-sm btn-light rounded-circle" onclick="resetZoom()" title="Reset Zoom">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="btn btn-sm btn-light rounded-circle" onclick="saveZoomedImage()" title="Save Image">
+                            <i class="fas fa-save"></i>
+                        </button>
+                        <button class="btn btn-sm btn-light rounded-circle" onclick="clearImage()" title="Clear Image">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="metadata" class="metadata-container">
+                    <p class="text-center text-muted">Upload an image to view metadata</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filtersModal">
+                    <i class="fas fa-images me-2"></i>View All Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Modal -->
+    <div class="modal fade" id="filtersModal" tabindex="-1" aria-labelledby="filtersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filtersModalLabel">Available Filters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="filter-controls mb-3">
+                                <h6>Sharpen</h6>
+                                <input type="range" class="form-range" id="sharpenIntensity" 
+                                    min="0" max="2" step="0.1" value="1.0">
+                                <label class="form-label">Intensity: <span id="sharpenValue">1.0</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Emboss</h6>
+                                <input type="range" class="form-range" id="embossStrength" 
+                                    min="0" max="2" step="0.1" value="1.0">
+                                <label class="form-label">Strength: <span id="embossValue">1.0</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Saturation</h6>
+                                <input type="range" class="form-range" id="saturationFactor" 
+                                    min="0" max="3" step="0.1" value="1.5">
+                                <label class="form-label">Factor: <span id="saturationValue">1.5</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="filter-controls mb-3">
+                                <h6>Edge Detection</h6>
+                                <input type="range" class="form-range" id="edgeThreshold1" 
+                                    min="0" max="255" step="1" value="100">
+                                <label class="form-label">Threshold 1: <span id="edgeValue1">100</span></label>
+                                <input type="range" class="form-range" id="edgeThreshold2" 
+                                    min="0" max="255" step="1" value="200">
+                                <label class="form-label">Threshold 2: <span id="edgeValue2">200</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Hue</h6>
+                                <input type="range" class="form-range" id="hueShift" 
+                                    min="0" max="1" step="0.1" value="0.5">
+                                <label class="form-label">Shift: <span id="hueValue">0.5</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Sepia</h6>
+                                <input type="range" class="form-range" id="sepiaIntensity" 
+                                    min="0" max="1" step="0.1" value="0.5">
+                                <label class="form-label">Intensity: <span id="sepiaValue">0.5</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Vibrance</h6>
+                                <input type="range" class="form-range" id="vibranceFactor" 
+                                    min="1" max="3" step="0.1" value="1.5">
+                                <label class="form-label">Factor: <span id="vibranceValue">1.5</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Vignette</h6>
+                                <input type="range" class="form-range" id="vignetteIntensity" 
+                                    min="0.1" max="2" step="0.1" value="1.0">
+                                <label class="form-label">Intensity: <span id="vignetteValue">1.0</span></label>
+                            </div>
+                            <div class="filter-controls mb-3">
+                                <h6>Noise Reduction</h6>
+                                <input type="range" class="form-range" id="noiseReductionStrength" 
+                                    min="3" max="15" step="2" value="7">
+                                <label class="form-label">Strength: <span id="noiseReductionValue">7</span></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row" id="filterGrid">
+                                <!-- Filter previews will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="activeFilterNotification" class="floating-notification d-none"></div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+.filter-preview {
+    cursor: pointer;
+    transition: transform 0.2s;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.filter-preview:hover {
+    transform: scale(1.05);
+}
+
+.filter-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.filter-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.25rem;
+    text-align: center;
+}
+
+#mainImage {
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.upload-area {
+    border: 2px dashed var(--bs-secondary);
+    border-radius: 5px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: var(--bs-primary);
+}
+
+.metadata-container {
+    background: var(--bs-dark);
+    border-radius: 5px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.filter-grid-container {
+    gap: 1rem;
+}
+
+.modal-content {
+    background: var(--bs-dark);
+    border: 1px solid var(--bs-gray-700);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--bs-gray-700);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--bs-gray-700);
+}
+.floating-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: var(--bs-primary);
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1050;
+    transition: opacity 0.3s;
+}
+#imageContainer {
+    overflow: hidden;
+    max-height: 80vh;
+}
+.zoom-image {
+    transform-origin: center;
+    transition: transform 0.2s;
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    cursor: default;
+}
+
+.zoom-image.zoomed {
+    cursor: move;
+    transition: transform 0.2s, translate 0.1s;
+}
+.zoom-controls {
+    z-index: 1000;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.zoom-controls:hover {
+    opacity: 1;
+}
+
+.zoom-controls .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

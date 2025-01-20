@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Sight Undercover</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Sight Undercover</a>
+            <a class="nav-link" href="/">Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h1 class="mb-4">Frequently Asked Questions</h1>
+        
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                        What is Sight Undercover?
+                    </button>
+                </h2>
+                <div id="q1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sight Undercover is a web application that allows you to apply various image filters and effects to your photos. It's a free tool that provides professional-grade image processing capabilities right in your browser.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                        What image formats are supported?
+                    </button>
+                </h2>
+                <div id="q2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        The application supports PNG, JPG, JPEG, and GIF formats. Files must be under 16MB in size.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                        What filters are available?
+                    </button>
+                </h2>
+                <div id="q3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>X-ray effect</li>
+                            <li>Sharpen</li>
+                            <li>Emboss</li>
+                            <li>Saturation adjustment</li>
+                            <li>Edge detection</li>
+                            <li>Hue adjustment</li>
+                            <li>Levels adjustment</li>
+                            <li>Sketch effect</li>
+                            <li>Sepia</li>
+                            <li>Vibrance</li>
+                            <li>Vignette</li>
+                            <li>Noise reduction</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">
+                        How do I use the application?
+                    </button>
+                </h2>
+                <div id="q4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        1. Drag and drop an image or click to upload<br>
+                        2. Wait for the image to process<br>
+                        3. Click "View All Filters" to see different effects<br>
+                        4. Adjust filter parameters using the sliders<br>
+                        5. Click the save button to download the processed image
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5">
+                        Is my data secure?
+                    </button>
+                </h2>
+                <div id="q5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes! All image processing is done on the server-side, and no images are permanently stored. They are automatically deleted after processing.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
